@@ -60,3 +60,6 @@ restaSegura x y
 butters = UnPersonaje "Butters" 100 100
 stan = UnPersonaje "Stan" 80 17
 cartman = UnPersonaje "Cartman" 200 20
+
+listaActividades :: [Personaje -> Personaje]
+listaActividades = [irEscuelaPrimaria, comerCheesyPoofs 10, irAlTrabajo "Mafia", dobleTurno ",Mafia", jugarWow 5 8, verPelicula]
