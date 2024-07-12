@@ -1,1 +1,1 @@
-# Cosas-de-Paradigmas-de-Programaci-n
+# Cosas de Paradigmas de Programación
