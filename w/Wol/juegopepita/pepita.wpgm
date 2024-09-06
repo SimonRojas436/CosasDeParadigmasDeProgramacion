@@ -1,0 +1,48 @@
+import example.*
+program PepitaGame {
+    game.title("pepita")
+    game.height(250)
+    game.width(250)
+    game.boardGround("photo.jpg")
+
+    game.addVisual(pepita)
+    game.addVisual(manzana)
+    game.addVisual(nido)
+    game.addVisual(alpiste)
+    //addVisualCharacter: no me permite modificar al objeto mientras realiza una accion
+
+    keyboard.right().onPressDo({
+        pepita.position(pepita.position().right(1))
+    })
+
+    keyboard.left().onPressDo({
+        pepita.position(pepita.position().left(1))
+    })
+
+    keyboard.down().onPressDo({
+        pepita.position(pepita.position().down(1))
+    })
+
+    keyboard.up().onPressDo({
+        pepita.position(pepita.position().up(1))
+    })
+
+    // keyboard.c().onPressDo({ /*TENGO QUE HACER QUE PEPITA SE COMA LO QUE ESTÁ*/ })
+
+    keyboard.space().onPressDo({
+        game.say(pepita,
+        if(pepita.estaCansada()) "NO PUEDO MAS!"
+        else "ESTOY PARA VOLAR, NENE!"
+        ) 
+    })
+
+    /*
+    game.onTick(2000, "movimiento", {
+        pepita.position(pepita.position().down(2))
+    })*/
+
+    game.start()
+}
+
+
+/*game.schedule(2000, {})*/
