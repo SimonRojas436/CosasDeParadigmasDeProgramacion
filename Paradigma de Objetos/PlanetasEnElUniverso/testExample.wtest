@@ -1,0 +1,83 @@
+import wlk.planetas.*
+import wlk.personas.*
+
+
+describe "PRUEBA I: Considerar un planeta con cuatro personas como habitantes, dos murallas y un museo. Verificar que: " {
+  const tlon = new Planeta()
+  const venus = new Planeta()
+    
+  const borges = new Persona(edad = 40, planeta = tlon)
+  const bioy = new Persona(edad = 25, planeta = tlon)
+  const ocampo = new Persona(edad = 36, planeta = tlon)
+  const walsh = new Persona(edad = 13, planeta = tlon)
+  const stefani = new Persona(edad = 27, planeta = venus)
+
+  
+
+  const muralla1 = new Muralla(longitud = 38)
+  const muralla2 = new Muralla(longitud = 19)
+  const muralla3 = new Muralla(longitud = 9)
+
+  const museo = new Museo(superficie = 400, indiceImportancia = 5)
+
+  method initialize() {
+    tlon.aniadirHabitante(borges)
+    tlon.aniadirHabitante(bioy)
+    tlon.aniadirHabitante(ocampo)
+    tlon.aniadirHabitante(walsh)
+    venus.aniadirHabitante(stefani)
+
+    tlon.nuevaConstruccion(muralla1)
+    tlon.nuevaConstruccion(muralla2)
+    venus.nuevaConstruccion(muralla3)
+    tlon.nuevaConstruccion(museo)
+  }
+
+  test "La delegación diplomática está formada por tres personas." {
+    assert.equals(tlon.delegacionDiplomatica().size(), 3)
+  }
+
+  //INVENTADO//
+  test "Despues de treinta años y algunas publicaciones, la delegación diplomática está formada por dos persona." {
+    borges.cumpleanios(30)
+    borges.modificarMonedas(-10)
+    bioy.cumpleanios(30)
+    ocampo.cumpleanios(30)
+    ocampo.modificarMonedas(-10)
+    walsh.cumpleanios(30)
+    assert.equals(tlon.delegacionDiplomatica().size(), 2)
+  }
+
+  test "Es valioso." {
+    assert.that(tlon.esValioso())
+  }
+
+  test "Agregar otro planeta, con habitantes y construcciones, pero que no sea valioso." {
+    assert.notThat(venus.esValioso())
+  }
+}
+
+describe "PRUEBA II: Definir un constructor y probar que trabaje bien." {
+  const champinion = new Planeta()
+
+  const mario = new Persona(edad = 30, planeta = champinion)
+  const luigi = new Persona(edad = 27, planeta = champinion)
+  const peach = new Persona(edad = 29, planeta = champinion)
+
+  const oficioConstructorMario = new Constructor(region = llanura, cantidadConstrucciones = 5)
+  const oficioConstructorLuigi = new Constructor(region = costa, cantidadConstrucciones = 2)
+  const oficioProductorPeach = new Productor()
+
+  method initialize() {
+    mario.cambiarOficio(oficioConstructorMario)
+    mario.trabajarEn(champinion, 20)
+    luigi.cambiarOficio(oficioConstructorLuigi)
+    luigi.trabajarEn(champinion, 17)
+    peach.cambiarOficio(oficioProductorPeach)
+    peach.trabajarEn(champinion, 50)
+  }
+
+  test "Un constructor con cinco obras es contratado para levantar una muralla en el Planeta Champiñion." {
+    assert.equals(mario.oficio().cantidadConstrucciones(), 6)
+  }
+}

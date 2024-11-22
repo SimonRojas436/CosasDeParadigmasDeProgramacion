@@ -1,0 +1,65 @@
+import example.*
+
+describe "PRUEBA I:" {
+  //ALUMNOS//
+  const harryBotter = new BotEstudiante(cargaElectrica = 80, aceitePuro = false)
+  const dracoMalfoy = new BotEstudiante(cargaElectrica = 100, aceitePuro = true)
+  const boty = new BotEstudiante(cargaElectrica = 85, aceitePuro = false)
+  const chatGPT = new BotEstudiante(cargaElectrica = 97, aceitePuro = false)
+  const hermioneGranger = new BotEstudiante(cargaElectrica = 100, aceitePuro = false)
+
+  //PROFESORES//
+  const albus = new BotProfesor(cargaElectrica = 100, aceitePuro = true)
+  const severus = new BotProfesor(cargaElectrica = 200, aceitePuro = true)
+
+  //HECHIZOS//
+  const hechizoComunAlbus = new HechizoComun(cargaNegativa = 60)
+
+  //MATERIAS//
+  const defensaHO = new Materia(nombreMateria = "Defensa contra los hackeos oscuros", profesor = severus, hechizoAprendido = inmobilus)
+  const materiaUno = new Materia(nombreMateria = "Uno", profesor = severus, hechizoAprendido = sectumSempra)
+  const materiaDos = new Materia(nombreMateria = "Dos", profesor = severus, hechizoAprendido = avadakedabra)
+  const materiaTres = new Materia(nombreMateria = "Tres", profesor = severus, hechizoAprendido = new HechizoComun(cargaNegativa = 60))
+
+  method initialize() {
+    const variosIngresantes = [harryBotter, dracoMalfoy, boty, chatGPT, hermioneGranger]
+
+    sombreroSeleccionador.asignarCasa(variosIngresantes)
+
+    harryBotter.asistirMateria(defensaHO)
+    harryBotter.asistirMateria(materiaUno)
+    harryBotter.asistirMateria(materiaDos)
+    harryBotter.asistirMateria(materiaTres)
+    albus.hechizosAprendidos().add(new HechizoComun(cargaNegativa = 60))
+    dracoMalfoy.asistirMateria(materiaDos)
+  }
+
+  test "El sombrero seleccionador envia a Draco Malfoy a Slytherin" {
+    assert.equals(dracoMalfoy.casaHogwart(), slytherin)
+  }
+
+  test "El sombrero seleccionador envia a Hermione Granger a Gryffindor" {
+    assert.equals(hermioneGranger.casaHogwart(), gryffindor)
+  }
+
+  test "Harry Botter asiste a cuatro clases, en una de ellas aprende Sectum Sempra e intenta golpear a Draco Malfoy" {
+    harryBotter.lanzarHechizo(sectumSempra, dracoMalfoy)
+    assert.notThat(dracoMalfoy.aceitePuro())
+  }
+
+  test "Harry Botter, mas tarde, usa el mismo hechizo contra el Sombrero Seleccionador" {
+    harryBotter.lanzarHechizo(sectumSempra, sombreroSeleccionador)
+    assert.that(sombreroSeleccionador.aceitePuro())
+  }
+
+  test "Draco Malfoy y Albus tienen un enfrentamiento" {
+    albus.lanzarHechizo(albus.ultimoHechizoAprendido(), dracoMalfoy)
+    assert.equals(dracoMalfoy.cargaElectrica(), 40)
+    dracoMalfoy.lanzarHechizo(avadakedabra, albus)
+    assert.equals(albus.cargaElectrica(), 50)
+    albus.lanzarHechizo(albus.ultimoHechizoAprendido(), dracoMalfoy)
+    assert.equals(dracoMalfoy.cargaElectrica(), 40)
+  }
+}
+
+
